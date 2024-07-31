@@ -1,0 +1,44 @@
+definitions:
+  genproto.CreateProductRequest:
+    properties:
+      description:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  genproto.ProductEmpty:
+    type: object
+info:
+  contact: {}
+paths:
+  /product:
+    post:
+      consumes:
+      - application/json
+      description: Create a new product
+      parameters:
+      - description: Borrower
+        in: body
+        name: borrower
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.CreateProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.ProductEmpty'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create a new product
+      tags:
+      - Product
+swagger: "2.0"
