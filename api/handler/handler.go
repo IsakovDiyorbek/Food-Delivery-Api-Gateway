@@ -13,6 +13,8 @@ type Handler struct{
 	Order genproto.OrderServiceClient
 	OrderItems genproto.OrderItemServiceClient
 	Cart genproto.CartServiceClient
+	Task genproto.TaskServiceClient
+	CourierLocation genproto.CourierLocationServiceClient
 }
 
 func NewHandler(users, delivery *grpc.ClientConn) *Handler{
@@ -22,6 +24,8 @@ func NewHandler(users, delivery *grpc.ClientConn) *Handler{
 		Order: genproto.NewOrderServiceClient(delivery),
 		OrderItems: genproto.NewOrderItemServiceClient(delivery),
 		Cart: genproto.NewCartServiceClient(delivery),
+		Task: genproto.NewTaskServiceClient(delivery),
+		CourierLocation: genproto.NewCourierLocationServiceClient(delivery),
 
 	}
 }
