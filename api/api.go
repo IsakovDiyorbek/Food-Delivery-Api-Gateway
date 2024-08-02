@@ -3,13 +3,14 @@ package api
 import (
 	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/api/handler"
 	"github.com/gin-gonic/gin"
-	"google.golang.org/grpc"
+	"github.com/minio/minio-go/v7"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"google.golang.org/grpc"
 )
 
-func NewGin(users, delivery *grpc.ClientConn) *gin.Engine{
-	h := handler.NewHandler(users, delivery)
+func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client) *gin.Engine {
+	h := handler.NewHandler(users, delivery, minIO)
 	r := gin.Default()
 	r.GET("api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
@@ -31,7 +32,6 @@ func NewGin(users, delivery *grpc.ClientConn) *gin.Engine{
 	r.DELETE("/courier_location/:id", h.DeleteCourierLocation)
 	r.GET("/courier_locations", h.GetAllCourierLocations)
 
-
 	r.POST("/order", h.CreateOrder)
 	r.GET("/order/:id", h.GetOrder)
 	r.PUT("/order/:id", h.UpdateOrder)
@@ -44,9 +44,16 @@ func NewGin(users, delivery *grpc.ClientConn) *gin.Engine{
 	r.DELETE("/order_item/:id", h.DeleteOrderItem)
 	r.GET("/order_items", h.GetAllOrderItems)
 
+	r.POST("/cart", h.CreateCart)
+	r.GET("/cart/:id", h.GetCart)
+	r.PUT("/cart/:id", h.UpdateCart)
+	r.DELETE("/cart/:id", h.DeleteCart)
+	r.GET("/carts", h.GetAllCarts)
+
+	r.POST("/minio/upload", h.UploadFile)
+	r.GET("/minio/:bucket/:object", h.DownloadImage)
 
 
 	return r
-
 
 }
