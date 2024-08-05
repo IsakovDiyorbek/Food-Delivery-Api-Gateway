@@ -54,6 +54,11 @@ func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client) *gin.Engine {
 	r.GET("/minio/:bucket/:object", h.DownloadImage)
 
 
+	r.POST("/notification", h.CreateNotification)
+	r.GET("/notification/:id", h.GetNotification)
+	r.PUT("/read", h.MarkNotificationAsRead)
+
+
 	return r
 
 }

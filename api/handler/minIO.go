@@ -42,6 +42,8 @@ func (h *Handler) UploadFile(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate URL"})
 		return
 	}
+	
+	
 
 	c.JSON(http.StatusOK, gin.H{"url": presignedURL.String()})
 }

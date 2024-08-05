@@ -16,6 +16,7 @@ type Handler struct {
 	Task            genproto.TaskServiceClient
 	CourierLocation genproto.CourierLocationServiceClient
 	miniIO minio.Client
+	Notification genproto.NotificationServiceClient
 }
 
 func NewHandler(users, delivery *grpc.ClientConn, minIO *minio.Client) *Handler {
@@ -28,5 +29,6 @@ func NewHandler(users, delivery *grpc.ClientConn, minIO *minio.Client) *Handler 
 		Task:            genproto.NewTaskServiceClient(delivery),
 		CourierLocation: genproto.NewCourierLocationServiceClient(delivery),
 		miniIO: *minIO,
+		Notification: genproto.NewNotificationServiceClient(delivery),
 	}
 }

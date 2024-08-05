@@ -61,6 +61,13 @@ definitions:
       status:
         type: string
     type: object
+  genproto.CreateNotificationRequest:
+    properties:
+      message:
+        type: string
+      user_id:
+        type: string
+    type: object
   genproto.CreateOrderItemRequest:
     properties:
       order_id:
@@ -112,6 +119,28 @@ definitions:
   genproto.DeleteCartResp:
     type: object
   genproto.Empty:
+    type: object
+  genproto.MarkNotificationAsReadReq:
+    properties:
+      id:
+        type: string
+      is_read:
+        type: boolean
+    type: object
+  genproto.Notification:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      is_read:
+        type: boolean
+      message:
+        type: string
+      user_id:
+        type: string
+    type: object
+  genproto.NotificationEmpty:
     type: object
   genproto.Order:
     properties:
@@ -587,6 +616,57 @@ paths:
       summary: Upload a file to MinIO
       tags:
       - MinIO
+  /notification:
+    post:
+      consumes:
+      - application/json
+      description: Create a new notification
+      parameters:
+      - description: Notification
+        in: body
+        name: notification
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.CreateNotificationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.NotificationEmpty'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create a new notification
+      tags:
+      - Notification
+  /notification/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get notification by id
+      parameters:
+      - description: Notification ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/genproto.Notification'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get notification by id
+      tags:
+      - Notification
   /order:
     post:
       consumes:
@@ -1044,6 +1124,34 @@ paths:
       summary: Get all products
       tags:
       - Product
+  /read:
+    put:
+      consumes:
+      - application/json
+      description: This API marks a notification as read
+      parameters:
+      - description: Notification
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/genproto.MarkNotificationAsReadReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message": "updated successfully'
+          schema:
+            type: string
+        "400":
+          description: 'error": "error message'
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: MARK notification as read
+      tags:
+      - Notification
   /task:
     post:
       consumes:
