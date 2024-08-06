@@ -2,20 +2,23 @@ package handler
 
 import (
 	"strconv"
+	 _ "google.golang.org/protobuf/types/known/structpb"
 
 	pb "github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto"
 	"github.com/gin-gonic/gin"
 )
 
+// CreateCart handles the creation of a new cart.
 // @Summary Create a new cart
-// @Description Create a new cart
+// @Description Create a new cart with the provided details.
 // @Tags Cart
-// @Accept  json
-// @Produce  json
-// @Param cart body pb.CreateCartReq true "Cart"
-// @Success 200 {object} pb.Empty
-// @Failure 400 {string} string "Bad Request"
-// @Router /cart [post]
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param cart body pb.CreateCartReq true "Cart details"
+// @Success 200 {string} string "Success Create Cart"
+// @Failure 400 {string} string "Error message"
+// @Router /cart [post]	
 func (h *Handler) CreateCart(c *gin.Context) {
 	req := pb.CreateCartReq{}
 	err := c.BindJSON(&req)
@@ -33,11 +36,13 @@ func (h *Handler) CreateCart(c *gin.Context) {
 	c.JSON(200, "Success Create Cart")
 }
 
+
 // @Summary Get a cart by id
 // @Description Get a cart by id
 // @Tags Cart
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Cart ID"
 // @Success 200 {object} pb.Cart
 // @Failure 400 {string} string "Bad Request"
@@ -59,6 +64,7 @@ func (h *Handler) GetCart(c *gin.Context) {
 // @Tags Cart
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param quantity query int false "Cart quantity"
 // @Param limit query int false "Limit"
 // @Param offset query int false "Offset"
@@ -101,6 +107,7 @@ func (h *Handler) GetAllCarts(c *gin.Context) {
 // @Tags Cart
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Cart ID"
 // @Param user_id query string false "Cart user id"
 // @Param product_id query string false "Cart product id"
@@ -113,7 +120,7 @@ func (h *Handler) UpdateCart(c *gin.Context) {
 	req := pb.UpdateCartReq{}
 	req.Id = c.Query("id")
 	req.UserId = c.Query("user_id")
-	req.ProductId = c.Query("product_id")
+	req.Product = c.Query("product_id")
 	req.Options = c.Query("options")
 	quantityStr := c.Query("quantity")
 	quantity, _ := strconv.Atoi(quantityStr)
@@ -133,6 +140,7 @@ func (h *Handler) UpdateCart(c *gin.Context) {
 // @Tags Cart
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Cart ID"
 // @Success 200 {object} pb.DeleteCartResp
 // @Failure 400 {string} string "Bad Request"

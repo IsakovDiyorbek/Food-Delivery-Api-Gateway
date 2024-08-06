@@ -1,7 +1,11 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/api/handler"
+	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/api/middleware"
+	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/minio/minio-go/v7"
 	swaggerFiles "github.com/swaggo/files"
@@ -9,10 +13,23 @@ import (
 	"google.golang.org/grpc"
 )
 
-func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client) *gin.Engine {
-	h := handler.NewHandler(users, delivery, minIO)
+// @title API Gateway
+// @version 1.0
+// @description API documentation for Food Delivery services
+// @host localhost:8088
+// @BasePath /
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client, enforcer *casbin.Enforcer) *gin.Engine {
+	h := handler.NewHandler(users, delivery, minIO, enforcer)
 	r := gin.Default()
 	r.GET("api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	fmt.Println(0000)
+	r.Use(middleware.MiddleWare())
+	fmt.Println(111)
+	r.Use(middleware.CasbinMiddleware(enforcer))
+	fmt.Println(222)
 
 	r.POST("/product", h.CreateProduct)
 	r.GET("/product/:id", h.GetProduct)
@@ -53,11 +70,9 @@ func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client) *gin.Engine {
 	r.POST("/minio/upload", h.UploadFile)
 	r.GET("/minio/:bucket/:object", h.DownloadImage)
 
-
 	r.POST("/notification", h.CreateNotification)
 	r.GET("/notification/:id", h.GetNotification)
 	r.PUT("/read", h.MarkNotificationAsRead)
-
 
 	return r
 

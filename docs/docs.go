@@ -17,7 +17,12 @@ const docTemplate = `{
     "paths": {
         "/cart": {
             "post": {
-                "description": "Create a new cart",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new cart with the provided details.",
                 "consumes": [
                     "application/json"
                 ],
@@ -30,7 +35,7 @@ const docTemplate = `{
                 "summary": "Create a new cart",
                 "parameters": [
                     {
-                        "description": "Cart",
+                        "description": "Cart details",
                         "name": "cart",
                         "in": "body",
                         "required": true,
@@ -41,13 +46,13 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Success Create Cart",
                         "schema": {
-                            "$ref": "#/definitions/genproto.Empty"
+                            "type": "string"
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "Error message",
                         "schema": {
                             "type": "string"
                         }
@@ -57,6 +62,11 @@ const docTemplate = `{
         },
         "/cart/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get a cart by id",
                 "consumes": [
                     "application/json"
@@ -93,6 +103,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a cart by id",
                 "consumes": [
                     "application/json"
@@ -153,6 +168,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a cart by id",
                 "consumes": [
                     "application/json"
@@ -191,6 +211,11 @@ const docTemplate = `{
         },
         "/carts": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all carts",
                 "consumes": [
                     "application/json"
@@ -240,6 +265,11 @@ const docTemplate = `{
         },
         "/courier_location": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new courier location",
                 "consumes": [
                     "application/json"
@@ -280,6 +310,11 @@ const docTemplate = `{
         },
         "/courier_location/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get a courier location by id",
                 "consumes": [
                     "application/json"
@@ -316,6 +351,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a courier location by id",
                 "consumes": [
                     "application/json"
@@ -390,6 +430,11 @@ const docTemplate = `{
         },
         "/courier_locations": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all courier locations",
                 "consumes": [
                     "application/json"
@@ -457,6 +502,11 @@ const docTemplate = `{
         },
         "/courier_location{id}": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a courier location by id",
                 "consumes": [
                     "application/json"
@@ -597,6 +647,11 @@ const docTemplate = `{
         },
         "/notification": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new notification",
                 "consumes": [
                     "application/json"
@@ -637,6 +692,11 @@ const docTemplate = `{
         },
         "/notification/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get notification by id",
                 "consumes": [
                     "application/json"
@@ -675,6 +735,11 @@ const docTemplate = `{
         },
         "/order": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new order",
                 "consumes": [
                     "application/json"
@@ -715,6 +780,11 @@ const docTemplate = `{
         },
         "/order/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get an order by id",
                 "consumes": [
                     "application/json"
@@ -751,6 +821,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update an order by id",
                 "consumes": [
                     "application/json"
@@ -811,6 +886,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete an order by id",
                 "consumes": [
                     "application/json"
@@ -849,6 +929,11 @@ const docTemplate = `{
         },
         "/order_item": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new order item",
                 "consumes": [
                     "application/json"
@@ -889,6 +974,11 @@ const docTemplate = `{
         },
         "/order_item/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get an order item by id",
                 "consumes": [
                     "application/json"
@@ -925,6 +1015,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update an order item by id",
                 "consumes": [
                     "application/json"
@@ -985,6 +1080,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete an order item by id",
                 "consumes": [
                     "application/json"
@@ -1023,6 +1123,11 @@ const docTemplate = `{
         },
         "/order_items": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all order items",
                 "consumes": [
                     "application/json"
@@ -1078,6 +1183,11 @@ const docTemplate = `{
         },
         "/orders": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all orders",
                 "consumes": [
                     "application/json"
@@ -1139,6 +1249,11 @@ const docTemplate = `{
         },
         "/product": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new product",
                 "consumes": [
                     "application/json"
@@ -1179,6 +1294,11 @@ const docTemplate = `{
         },
         "/product/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get a product by id",
                 "consumes": [
                     "application/json"
@@ -1215,6 +1335,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a product by id",
                 "consumes": [
                     "application/json"
@@ -1275,6 +1400,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a product by id",
                 "consumes": [
                     "application/json"
@@ -1313,6 +1443,11 @@ const docTemplate = `{
         },
         "/products": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all products",
                 "consumes": [
                     "application/json"
@@ -1413,6 +1548,11 @@ const docTemplate = `{
         },
         "/task": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new task",
                 "consumes": [
                     "application/json"
@@ -1453,6 +1593,11 @@ const docTemplate = `{
         },
         "/task/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get a task by id",
                 "consumes": [
                     "application/json"
@@ -1489,6 +1634,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update a task by id",
                 "consumes": [
                     "application/json"
@@ -1557,6 +1707,11 @@ const docTemplate = `{
         },
         "/tasks": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Get all tasks",
                 "consumes": [
                     "application/json"
@@ -1618,6 +1773,11 @@ const docTemplate = `{
         },
         "/task{id}": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete a task by id",
                 "consumes": [
                     "application/json"
@@ -1668,7 +1828,7 @@ const docTemplate = `{
                 "options": {
                     "type": "string"
                 },
-                "product_id": {
+                "product": {
                     "$ref": "#/definitions/genproto.Product"
                 },
                 "quantity": {
@@ -1717,7 +1877,7 @@ const docTemplate = `{
                 "options": {
                     "type": "string"
                 },
-                "product_id": {
+                "product": {
                     "type": "string"
                 },
                 "quantity": {
@@ -2010,17 +2170,24 @@ const docTemplate = `{
         "genproto.UpdateCartRes": {
             "type": "object"
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "localhost:8088",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "API Gateway",
+	Description:      "API documentation for Food Delivery services",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   genproto.Cart:
     properties:
@@ -7,7 +8,7 @@ definitions:
         type: string
       options:
         type: string
-      product_id:
+      product:
         $ref: '#/definitions/genproto.Product'
       quantity:
         type: integer
@@ -39,7 +40,7 @@ definitions:
     properties:
       options:
         type: string
-      product_id:
+      product:
         type: string
       quantity:
         type: integer
@@ -230,16 +231,20 @@ definitions:
     type: object
   genproto.UpdateCartRes:
     type: object
+host: localhost:8088
 info:
   contact: {}
+  description: API documentation for Food Delivery services
+  title: API Gateway
+  version: "1.0"
 paths:
   /cart:
     post:
       consumes:
       - application/json
-      description: Create a new cart
+      description: Create a new cart with the provided details.
       parameters:
-      - description: Cart
+      - description: Cart details
         in: body
         name: cart
         required: true
@@ -249,13 +254,15 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/genproto.Empty'
-        "400":
-          description: Bad Request
+          description: Success Create Cart
           schema:
             type: string
+        "400":
+          description: Error message
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
       summary: Create a new cart
       tags:
       - Cart
@@ -281,6 +288,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a cart by id
       tags:
       - Cart
@@ -305,6 +314,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a cart by id
       tags:
       - Cart
@@ -345,6 +356,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a cart by id
       tags:
       - Cart
@@ -377,6 +390,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all carts
       tags:
       - Cart
@@ -403,6 +418,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new courier location
       tags:
       - CourierLocation
@@ -428,6 +445,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a courier location by id
       tags:
       - CourierLocation
@@ -476,6 +495,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a courier location by id
       tags:
       - CourierLocation
@@ -501,6 +522,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a courier location by id
       tags:
       - CourierLocation
@@ -545,6 +568,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all courier locations
       tags:
       - CourierLocation
@@ -639,6 +664,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new notification
       tags:
       - Notification
@@ -664,6 +691,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get notification by id
       tags:
       - Notification
@@ -690,6 +719,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new order
       tags:
       - Order
@@ -715,6 +746,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete an order by id
       tags:
       - Order
@@ -739,6 +772,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get an order by id
       tags:
       - Order
@@ -779,6 +814,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update an order by id
       tags:
       - Order
@@ -805,6 +842,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new order item
       tags:
       - OrderItem
@@ -830,6 +869,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete an order item by id
       tags:
       - OrderItem
@@ -854,6 +895,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get an order item by id
       tags:
       - OrderItem
@@ -894,6 +937,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update an order item by id
       tags:
       - OrderItem
@@ -930,6 +975,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all order items
       tags:
       - OrderItem
@@ -970,6 +1017,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all orders
       tags:
       - Order
@@ -996,6 +1045,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new product
       tags:
       - Product
@@ -1021,6 +1072,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a product by id
       tags:
       - Product
@@ -1045,6 +1098,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a product by id
       tags:
       - Product
@@ -1085,6 +1140,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a product by id
       tags:
       - Product
@@ -1121,6 +1178,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all products
       tags:
       - Product
@@ -1175,6 +1234,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Create a new task
       tags:
       - Task
@@ -1200,6 +1261,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get a task by id
       tags:
       - Task
@@ -1244,6 +1307,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Update a task by id
       tags:
       - Task
@@ -1269,6 +1334,8 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a task by id
       tags:
       - Task
@@ -1309,7 +1376,14 @@ paths:
           description: Bad Request
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Get all tasks
       tags:
       - Task
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

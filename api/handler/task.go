@@ -10,6 +10,7 @@ import (
 // @Tags Task
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param task body pb.CreateTaskRequest true "Task"
 // @Success 200 {object} pb.TaskEmpty
 // @Failure 400 {string} string "Bad Request"
@@ -36,6 +37,7 @@ func (h *Handler) CreateTask(c *gin.Context) {
 // @Tags Task
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Task ID"
 // @Success 200 {object} pb.Task
 // @Failure 400 {string} string "Bad Request"
@@ -55,6 +57,7 @@ func (h *Handler) GetTask(c *gin.Context) {
 // @Tags Task
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Task ID"
 // @Param title query string false "Task title"
 // @Param description query string false "Task description"
@@ -86,6 +89,7 @@ func (h *Handler) UpdateTask(c *gin.Context) {
 // @Tags Task
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param title query string false "Task title"
 // @Param description query string false "Task description"
 // @Param assigned_to query string false "Task assigned to"
@@ -116,6 +120,7 @@ func (h *Handler) GetAllTasks(c *gin.Context) {
 // @Tags Task
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Task ID"
 // @Success 200 {object} pb.TaskEmpty
 // @Failure 400 {string} string "Bad Request"

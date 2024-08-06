@@ -12,6 +12,7 @@ import (
 // @Tags Product
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param borrower body pb.CreateProductRequest true "Borrower"
 // @Success 200 {object} pb.ProductEmpty
 // @Failure 400 {string} string "Bad Request"
@@ -38,6 +39,7 @@ func (h *Handler) CreateProduct(c *gin.Context) {
 // @Tags Product
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Product ID"
 // @Success 200 {object} pb.Product
 // @Failure 400 {string} string "Bad Request"
@@ -57,6 +59,7 @@ func (h *Handler) GetProduct(c *gin.Context) {
 // @Tags Product
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Product ID"
 // @Param name query string false "Product name"
 // @Param image_url query string false "Product image url"
@@ -96,6 +99,7 @@ func (h *Handler) UpdateProduct(c *gin.Context) {
 // @Tags Product
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Product ID"
 // @Success 200 {object} pb.ProductEmpty
 // @Failure 400 {string} string "Bad Request"
@@ -115,6 +119,7 @@ func (h *Handler) DeleteProduct(c *gin.Context) {
 // @Tags Product
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param name query string false "Product name"
 // @Param image_url query string false "Product image url"
 // @Param description query string false "Product description"

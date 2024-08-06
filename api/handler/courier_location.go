@@ -12,6 +12,7 @@ import (
 // @Tags CourierLocation
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param courier_location body pb.CreateCourierLocationRequest true "Courier Location"
 // @Success 200 {object} pb.Empty
 // @Failure 400 {string} string "Bad Request"
@@ -36,6 +37,7 @@ func (h *Handler) CreateCourierLocation(c *gin.Context) {
 // @Tags CourierLocation
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Courier Location ID"
 // @Success 200 {object} pb.CourierLocation
 // @Failure 400 {string} string "Bad Request"
@@ -56,6 +58,7 @@ func (h *Handler) GetCourierLocation(c *gin.Context) {
 // @Tags CourierLocation
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Courier Location ID"
 // @Param courier_id query string false "Courier ID"
 // @Param latitude query float64 false "Courier Location latitude"
@@ -109,6 +112,7 @@ func (h *Handler) UpdateCourierLocation(c *gin.Context) {
 // @Tags CourierLocation
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Courier Location ID"
 // @Success 200 {object} pb.Empty
 // @Failure 400 {string} string "Bad Request"
@@ -130,6 +134,7 @@ func (h *Handler) DeleteCourierLocation(c *gin.Context) {
 // @Tags CourierLocation
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param courier_id query string false "Courier ID"
 // @Param start_time query string false "Courier Location start time"
 // @Param end_time query string false "Courier Location end time"

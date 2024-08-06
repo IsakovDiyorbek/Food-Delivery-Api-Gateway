@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	pb "github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto"
+	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +13,7 @@ import (
 // @Tags Order
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param order body pb.CreateOrderRequest true "Order"
 // @Success 200 {object} pb.OrderEmpty
 // @Failure 400 {string} string "Bad Request"
@@ -24,16 +26,16 @@ func (h *Handler) CreateOrder(c *gin.Context) {
 		return
 	}
 
-	// res, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: req.UserId})
-	// if err != nil {
-	// 	c.JSON(400, err.Error())
-	// 	return
-	// }
+	res, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: req.UserId})
+	if err != nil {
+		c.JSON(400, err.Error())
+		return
+	}
 
-	// if res == nil {
-	// 	c.JSON(400, "User not found")
-	// 	return
-	// }
+	if res == nil {
+		c.JSON(400, "User not found")
+		return
+	}
 
 	_, err = h.Order.CreateOrder(c, &req)
 	if err != nil {
@@ -50,6 +52,7 @@ func (h *Handler) CreateOrder(c *gin.Context) {
 // @Tags Order
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Order ID"
 // @Success 200 {object} pb.Order
 // @Failure 400 {string} string "Bad Request"
@@ -69,6 +72,7 @@ func (h *Handler) GetOrder(c *gin.Context) {
 // @Tags Order
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Order ID"
 // @Param status query string false "Order status"
 // @Param courier_id query string false "Order courier id"
@@ -107,6 +111,7 @@ func (h *Handler) UpdateOrder(c *gin.Context) {
 // @Tags Order
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param user_id query string false "Order user id"
 // @Param status query string false "Order status"
 // @Param courier_id query string false "Order courier id"
@@ -121,7 +126,7 @@ func (h *Handler) GetAllOrders(c *gin.Context) {
 	req.Status = c.Query("status")
 	req.CourierId = c.Query("courier_id")
 	req.DeliveryAddress = c.Query("delivery_address")
-	
+
 	totalAmountStr := c.Query("total_amount")
 	if totalAmountStr != "" {
 		totalAmount, err := strconv.ParseFloat(totalAmountStr, 64)
@@ -140,12 +145,12 @@ func (h *Handler) GetAllOrders(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-
 // @Summary Delete an order by id
 // @Description Delete an order by id
 // @Tags Order
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Order ID"
 // @Success 200 {object} pb.OrderEmpty
 // @Failure 400 {string} string "Bad Request"

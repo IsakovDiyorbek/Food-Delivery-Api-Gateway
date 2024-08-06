@@ -10,6 +10,7 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
+
 // @Summary Upload a file to MinIO
 // @Description Upload a file to MinIO
 // @Tags MinIO
@@ -43,7 +44,7 @@ func (h *Handler) UploadFile(c *gin.Context) {
 		return
 	}
 	
-	
+
 
 	c.JSON(http.StatusOK, gin.H{"url": presignedURL.String()})
 }
@@ -65,7 +66,6 @@ func (h *Handler) DownloadImage(c *gin.Context) {
 	objectName := c.Param("bucket")
 	bucketName := c.Param("obkect")
 
-	// Get the object from MinIO
 	object, err := h.miniIO.GetObject(context.Background(), bucketName, objectName, minio.GetObjectOptions{})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -73,6 +73,5 @@ func (h *Handler) DownloadImage(c *gin.Context) {
 	}
 	defer object.Close()
 
-	// Write the object to the response
 	c.DataFromReader(http.StatusOK, -1, "application/octet-stream", object, map[string]string{"Content-Disposition": fmt.Sprintf("attachment; filename=%s", objectName)})
 }

@@ -13,6 +13,7 @@ import (
 // @Tags OrderItem
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param order_item body pb.CreateOrderItemRequest true "Order Item"
 // @Success 200 {object} pb.OrderItemEmpty
 // @Failure 400 {string} string "Bad Request"
@@ -32,6 +33,13 @@ func (h *Handler) CreateOrderItem(c *gin.Context) {
 		return
 	}
 
+	_, err = h.Order.UpdateOrder(c, &pb.UpdateOrderRequest{Id: req.OrderId, Status: "Assigned"})
+	if err != nil {
+		c.JSON(400, err.Error())
+		return
+	}
+
+
 	c.JSON(200, "Success Create OrderItem")
 }
 
@@ -40,6 +48,7 @@ func (h *Handler) CreateOrderItem(c *gin.Context) {
 // @Tags OrderItem
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Order Item ID"
 // @Success 200 {object} pb.OrderItem
 // @Failure 400 {string} string "Bad Request"
@@ -59,6 +68,7 @@ func (h *Handler) GetOrderItem(c *gin.Context) {
 // @Tags OrderItem
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id query string true "Order Item ID"
 // @Param order_id query string false "Order ID"
 // @Param product_id query string false "Product ID"
@@ -99,6 +109,7 @@ func (h *Handler) UpdateOrderItem(c *gin.Context) {
 // @Tags OrderItem
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param order_id query string false "Order ID"
 // @Param product_id query string false "Product ID"
 // @Param quantity query int false "Order Item quantity"
@@ -138,6 +149,7 @@ func (h *Handler) GetAllOrderItems(c *gin.Context) {
 // @Tags OrderItem
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Order Item ID"
 // @Success 200 {object} pb.OrderItemEmpty
 // @Failure 400 {string} string "Bad Request"

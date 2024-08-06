@@ -10,6 +10,7 @@ import (
 // @Tags Notification
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param notification body pb.CreateNotificationRequest true "Notification"
 // @Success 200 {object} pb.NotificationEmpty
 // @Failure 400 {string} string "Bad Request"
@@ -35,6 +36,7 @@ func (h *Handler) CreateNotification(c *gin.Context) {
 // @Tags Notification
 // @Accept  json
 // @Produce  json
+// @Security BearerAuth
 // @Param id path string true "Notification ID"
 // @Success 200 {object} pb.Notification
 // @Failure 400 {string} string "Bad Request"
