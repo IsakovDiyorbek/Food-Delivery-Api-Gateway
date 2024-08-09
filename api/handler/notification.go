@@ -2,6 +2,7 @@ package handler
 
 import (
 	pb "github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto"
+	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,7 +23,11 @@ func (h *Handler) CreateNotification(c *gin.Context) {
 		c.JSON(400, err.Error())
 		return
 	}
-
+	_, err = h.User.GetProfile(c, &user.GetProfileRequest{Id: notification.UserId})
+	if err != nil{
+		c.JSON(400, "User not found")
+		return
+	}
 	_, err = h.Notification.CreateNotification(c, &notification)
 	if err != nil {
 		c.JSON(400, err.Error())

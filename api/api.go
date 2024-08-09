@@ -1,8 +1,6 @@
 package api
 
 import (
-	"fmt"
-
 	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/api/handler"
 	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/api/middleware"
 	"github.com/casbin/casbin/v2"
@@ -25,11 +23,8 @@ func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client, enforcer *cas
 	h := handler.NewHandler(users, delivery, minIO, enforcer)
 	r := gin.Default()
 	r.GET("api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	fmt.Println(0000)
 	r.Use(middleware.MiddleWare())
-	fmt.Println(111)
 	r.Use(middleware.CasbinMiddleware(enforcer))
-	fmt.Println(222)
 
 	r.POST("/product", h.CreateProduct)
 	r.GET("/product/:id", h.GetProduct)
@@ -68,7 +63,6 @@ func NewGin(users, delivery *grpc.ClientConn, minIO *minio.Client, enforcer *cas
 	r.GET("/carts", h.GetAllCarts)
 
 	r.POST("/minio/upload", h.UploadFile)
-	r.GET("/minio/:bucket/:object", h.DownloadImage)
 
 	r.POST("/notification", h.CreateNotification)
 	r.GET("/notification/:id", h.GetNotification)

@@ -28,6 +28,7 @@ func (h *Handler) CreateOrderItem(c *gin.Context) {
 	fmt.Println(req.OrderId, req.ProductId, req.Quantity, req.Price)
 	_, err = h.OrderItems.CreateOrderItem(c, &req)
 
+
 	if err != nil {
 		c.JSON(400, err.Error())
 		return

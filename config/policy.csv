@@ -10,6 +10,8 @@ p, admin, /order, POST
 p, user, /order/:id, GET
 p, admin, /order/:id, PUT
 p, user, /orders, GET
+p, courier, /orders, GET
+p, admin, /orders, GET
 p, admin, /order/history, GET
 p, admin, /order/:id, DELETE
 
@@ -26,6 +28,7 @@ p, admin, /notification/read, PUT
 p, admin, /task, POST
 p, user, /task/:id, GET
 p, user, /tasks, GET
+p, admin, /tasks, GET
 p, admin, /task/:id, PUT
 p, admin, /task/:id, DELETE
 

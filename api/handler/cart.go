@@ -2,9 +2,11 @@ package handler
 
 import (
 	"strconv"
-	 _ "google.golang.org/protobuf/types/known/structpb"
+
+	_ "google.golang.org/protobuf/types/known/structpb"
 
 	pb "github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto"
+	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +20,7 @@ import (
 // @Param cart body pb.CreateCartReq true "Cart details"
 // @Success 200 {string} string "Success Create Cart"
 // @Failure 400 {string} string "Error message"
-// @Router /cart [post]	
+// @Router /cart [post]
 func (h *Handler) CreateCart(c *gin.Context) {
 	req := pb.CreateCartReq{}
 	err := c.BindJSON(&req)
@@ -26,7 +28,15 @@ func (h *Handler) CreateCart(c *gin.Context) {
 		c.JSON(400, err.Error())
 		return
 	}
-
+	res, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: req.UserId})
+	if err != nil {
+		c.JSON(400, "User not found")
+		return
+	}
+	if res.Role != "user" {
+		c.JSON(400, "User not found")
+		return
+	}
 	_, err = h.Cart.CreateCart(c, &req)
 	if err != nil {
 		c.JSON(400, err.Error())
@@ -35,7 +45,6 @@ func (h *Handler) CreateCart(c *gin.Context) {
 
 	c.JSON(200, "Success Create Cart")
 }
-
 
 // @Summary Get a cart by id
 // @Description Get a cart by id

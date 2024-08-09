@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/api"
@@ -12,13 +13,13 @@ import (
 )
 
 func main() {
-	delivery, err := grpc.NewClient(":9000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	delivery, err := grpc.NewClient(fmt.Sprintf("delivery_service%s", ":9000"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer delivery.Close()
 
-	user, err := grpc.NewClient(":8085", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	user, err := grpc.NewClient(fmt.Sprintf("auth_service%s", ":9999"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,7 +31,7 @@ func main() {
 	}
 
 	enforcer, err := casbin.NewEnforcer("config/model.conf", "config/policy.csv")
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 

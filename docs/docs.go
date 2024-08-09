@@ -545,6 +545,11 @@ const docTemplate = `{
         },
         "/minio/upload": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Upload a file to MinIO",
                 "consumes": [
                     "multipart/form-data"
@@ -569,57 +574,6 @@ const docTemplate = `{
                         "description": "Filename",
                         "name": "filename",
                         "in": "formData",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/minio/{bucket}/{object}": {
-            "get": {
-                "description": "Download an image from MinIO",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "MinIO"
-                ],
-                "summary": "Download an image from MinIO",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Bucket name",
-                        "name": "bucket",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Object name",
-                        "name": "object",
-                        "in": "path",
                         "required": true
                     }
                 ],

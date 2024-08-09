@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	pb "github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto"
+	"github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,6 +25,16 @@ func (h *Handler) CreateCourierLocation(c *gin.Context) {
 		c.JSON(400, err.Error())
 		return
 	}
+	res, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: reqp.CourierId})
+	if res.Role == "courier"{
+		c.JSON(400, "User not found")
+		return
+	}
+	if err != nil {
+		c.JSON(400, err.Error())
+		return
+	}
+
 	_, err = h.CourierLocation.CreateCourierLocation(c, &reqp)
 	if err != nil {
 		c.JSON(400, err.Error())
@@ -41,7 +52,7 @@ func (h *Handler) CreateCourierLocation(c *gin.Context) {
 // @Param id query string true "Courier Location ID"
 // @Success 200 {object} pb.CourierLocation
 // @Failure 400 {string} string "Bad Request"
-// @Router /courier_location/{id} [get]
+// @Router /courier_location/{id} [get]	
 func (h *Handler) GetCourierLocation(c *gin.Context) {
 	reqp := pb.GetCourierLocationRequest{}
 	reqp.Id = c.Query("id")

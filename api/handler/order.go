@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"net/http"
 	"strconv"
 
 	pb "github.com/Food_Delivery/Food-Delivery-Api-Gateway/genproto"
@@ -20,31 +21,35 @@ import (
 // @Router /order [post]
 func (h *Handler) CreateOrder(c *gin.Context) {
 	req := pb.CreateOrderRequest{}
-	err := c.BindJSON(&req)
-	if err != nil {
-		c.JSON(400, err.Error())
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request format"})
 		return
 	}
 
-	res, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: req.UserId})
+	resUser, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: req.UserId})
 	if err != nil {
-		c.JSON(400, err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
 		return
 	}
 
-	if res == nil {
-		c.JSON(400, "User not found")
+	resCourier, err := h.User.GetProfile(c, &user.GetProfileRequest{Id: req.CourierId})
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Courier not found"})
+		return
+	}
+
+	if resUser.Role != "user" || resCourier.Role != "courier" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user or courier role"})
 		return
 	}
 
 	_, err = h.Order.CreateOrder(c, &req)
 	if err != nil {
-		c.JSON(400, err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create order"})
 		return
 	}
 
-	c.JSON(200, "Success Create Order")
-
+	c.JSON(http.StatusOK, "Order created successfully")
 }
 
 // @Summary Get an order by id
