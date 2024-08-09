@@ -231,7 +231,6 @@ definitions:
     type: object
   genproto.UpdateCartRes:
     type: object
-host: localhost:8088
 info:
   contact: {}
   description: API documentation for Food Delivery services

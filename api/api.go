@@ -14,7 +14,6 @@ import (
 // @title API Gateway
 // @version 1.0
 // @description API documentation for Food Delivery services
-// @host localhost:8088
 // @BasePath /
 // @securityDefinitions.apikey BearerAuth
 // @in header
