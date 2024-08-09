@@ -28,6 +28,23 @@ func (h *Handler) UploadFile(c *gin.Context) {
 	}
 
 	bucketName := "testbucket"
+	location := "us-east-1" 
+
+	exists, err := h.miniIO.BucketExists(c, bucketName)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check if bucket exists"})
+		return
+	}
+
+	// Create the bucket if it doesn't exist
+	if !exists {
+		err = h.miniIO.MakeBucket(c, bucketName, minio.MakeBucketOptions{Region: location})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create bucket"})
+			return
+		}
+	}
+
 	objectName := "images/" + time.Now().Format("20060102150405") + "-" + c.Request.FormValue("filename")
 
 	_, err = h.miniIO.PutObject(c, bucketName, objectName, file, -1, minio.PutObjectOptions{})
